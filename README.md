@@ -1,13 +1,13 @@
 # Frontend react and backend nodejs Todos application
 
-## Available Scripts
+react front containing to do from and and list. Backend node js using express framework to expose todos api
 
 In the project directory, you can run:
 
-### `npm start`
+#### `npm run start:backend`
 
-### `npm test`
+To start the backedn node js application
 
-### `npm run build`
+#### `npm run start:frontend`
 
-### `npm run eject`
+To start the frontend react application
