@@ -1,23 +1,24 @@
 const fs = require("fs");
 // const file = "../../config/db.json";
-const file = "./backend/config/db.json";
+const filePath = "./backend/config/db.json";
 const todoRead = {};
 
 
-const readtodos = (callback) => {
-  fs.readFile(file, (error, data) => {
+const readtodos = async (callback) => {
+   fs.readFile(filePath, (error, data) => {
     if (error) {
       console.log("Error reading data: ", error);
       callback(error,null)
     } else {
       const todos = JSON.parse(data).todos;
+      console.log("todoservice todo read: ",todos)
      callback(null,todos);
     }
   });
 };
 
 const updateTodos = async (id,newTodo,callback) => {
-  fs.readFile("file", (error, data) => {
+  fs.readFile(filePath, (error, data) => {
     if (error) {
       console.log("Error reading data: ", error);
       callback(error,null)
@@ -37,9 +38,9 @@ const updateTodos = async (id,newTodo,callback) => {
 };
 
 
-const readtodo =   (id,callback) => {
+const readtodo =   async (id,callback) => {
   
- fs.readFile(file, (error, data) => {
+ fs.readFile(filePath, (error, data) => {
     if (error) {
       console.log("Error reading data: ", error);
       callback(err,null)
@@ -57,10 +58,14 @@ const readtodo =   (id,callback) => {
   });
 };
 
-const writeData = async (data) => {
+const writeData = async (todos) => {
   try {
-    const todos = { data };
-    await fs.writeFile(file, JSON.stringify(todos, null, 2));
+    const todosTowrite = { todos };
+    await fs.writeFile(filePath, JSON.stringify(todosTowrite,null,2),err=>
+    {
+      if(err)throw err
+      console.log('Done writing')
+    });
   } catch (error) {
     console.log("Error writing data: ", error);
     return [];
