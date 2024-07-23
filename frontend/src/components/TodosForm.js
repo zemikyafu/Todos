@@ -1,18 +1,32 @@
 import { useState } from "react";
-
+import { addTodos,fetchTodos } from "../api/apiTodos";
 function TodosForm(prob) {
   const today = new Date().toISOString().split("T")[0];
   const [active, setActive] = useState(false);
+  const [error,setError]= useState(null);
   const [formState, setFormState] = useState({
     title: "",
     deadline: "",
     status: "",
   });
   const handleSubmit = (e) => {
+    console.log("submit start")
     e.preventDefault();
     if (formState.status) {
-      setActive(true);
-      prob.onClickAdd(true, formState);
+      setActive(true);    
+      try {
+        console.log('formstate: ',formState)
+       const respons= addTodos(formState);
+       if(!respons.ok)
+       { 
+        setError("Error on post request")
+        throw new Error("Error on post request")
+       }
+          console.log('respons: ',respons)
+          prob.onSubmit(true);
+      } catch (error) {
+        console.log("Error", error.message);
+      }
     }
   };
   const handleOnchange = (e) => {
@@ -22,6 +36,7 @@ function TodosForm(prob) {
 
   return (
     <div className="todoContainer">
+     {error && <span className="errorMsg">{error}</span> }
       <form onSubmit={handleSubmit}>
         <h4>Add new Todo</h4>
         <input

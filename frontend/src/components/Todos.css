@@ -94,3 +94,9 @@ select {
   font-style: italic;
   font-size: 16px;
 }
+.errorMsg{
+  color:red;
+  text-align: right;
+  margin-top: 5px;
+  margin-right: 20px;
+}
