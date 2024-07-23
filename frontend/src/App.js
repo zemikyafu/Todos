@@ -4,6 +4,7 @@ import "./components/Todos.css";
 import TodosForm from "./components/TodosForm";
 import TodoList from "./components/TodoList";
 import { useState } from "react";
+// import { addTodos,fetchTodos } from "../api/apiTodos";
 
 function App() {
   const [todoLists, setTodoLists] = useState([]);
@@ -19,11 +20,20 @@ function App() {
       setListActive(true);
     }
   }
-
-  function onClickAdd(active, data) {
-    setTodoLists([...todoLists, data]);
-    setListActive(active);
-    setFormActive(!active);
+function onLinkClicked(active,item)
+{
+  
+ setFormActive(!active);
+ setListActive(active);
+}
+  function onSubmit(active) {
+    // setTodoLists([...todoLists, data]);
+    try {
+      setListActive(active);
+      setFormActive(!active);
+    } catch (error) {
+      console.log("error", error.message);
+    }
   }
   return (
     <div className="App">
@@ -31,8 +41,8 @@ function App() {
         {" "}
         add new todo
       </button>
-      {formActive && <TodosForm onClickAdd={onClickAdd}></TodosForm>}
-      {listActive && <TodoList todolists={todoLists}></TodoList>}
+      {formActive && <TodosForm onSubmit={onSubmit}></TodosForm>}
+      {listActive && <TodoList onLinkClicked={onLinkClicked}></TodoList>}
     </div>
   );
 }
