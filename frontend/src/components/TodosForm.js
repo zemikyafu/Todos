@@ -9,22 +9,29 @@ function TodosForm(prob) {
     deadline: "",
     status: "",
   });
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     console.log("submit start")
     e.preventDefault();
     if (formState.status) {
       setActive(true);    
       try {
-        console.log('formstate: ',formState)
-       const respons= addTodos(formState);
-       if(!respons.ok)
-       { 
-        setError("Error on post request")
-        throw new Error("Error on post request")
-       }
-          console.log('respons: ',respons)
-          prob.onSubmit(true);
+        
+      const response= await  addTodos(formState);
+      console.log('respons at todoform: ',response);
+      //  .then(respone =>{respone.json();
+      //   console.log('respons at todoform: ',respone);   
+      // if(!respone.ok)
+      // {
+      //   setError("Error on post request")
+      //   throw new Error("Error on post request");
+      // }
+      // }
+      
+      // ).then(data=>console.log(data));
+       
+       prob.onSubmit(true);
       } catch (error) {
+        setError("Error on post request");
         console.log("Error", error.message);
       }
     }

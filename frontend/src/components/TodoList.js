@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchTodos } from "../api/apiTodos";
+
+
 function TodoList(prob) {
 
-  const[todoLists,setTododlists]=useState({});
-  const[active,setActive]=useEffect(true);
+  const[todoLists,setTododlists]=useState([]);
+  const[active,setActive]=useState(true);
 
   const getbordercolor = (deadlineStatus) => {
   
@@ -22,9 +24,8 @@ function TodoList(prob) {
 
   useEffect(()=>{
    const getTodos=  async ()=>{
-    console.log("useeffect start")
     try {
-      console.log("useeffect start")
+    
       const todos = await fetchTodos();
       console.log("useeffect start", todos)
       setTododlists(todos)
@@ -40,8 +41,8 @@ function TodoList(prob) {
     prob.onLinkClicked(active,item);
   }
 
-  const todolist = todoLists.map((item) => (
-    <li key={item.id} onClick={updateTodo(item)} style={{ borderColor: `${getbordercolor(item.status)}` }}>
+  const todolist = todoLists.map((item,index) => (
+    <li key={index} onClick={()=>updateTodo(item)} style={{ borderColor: `${getbordercolor(item.status)}` }}>
       {" "}
       <span className="title">{item.title}</span>{" "}
       <span className="deadLine">Deadline: {item.deadline}</span>
@@ -52,7 +53,7 @@ function TodoList(prob) {
     <div className="todoList">
       <h3>Todo List</h3>
 
-      <ul className="lists"><a className="todosLink" key={todolist} href="">{todolist}</a></ul>
+      <ul className="lists">{todolist}</ul>
       <ul className="statusbar">
        <li style={{ borderColor: `${getbordercolor("done")}` }}> Done</li>
         <li style={{ borderColor: `${getbordercolor("notstarted")}` }}>

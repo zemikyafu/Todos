@@ -55,6 +55,9 @@ select {
   margin: auto;
   align-items: left;
 }
+.todoList :hover{
+  cursor: pointer;
+}
 .lists li {
   list-style: none;
   background: rgb(218, 214, 214);

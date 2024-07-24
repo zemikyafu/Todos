@@ -60,8 +60,8 @@ const readtodo =   async (id,callback) => {
 
 const writeData = async (todos) => {
   try {
-    const todosTowrite = { todos };
-    await fs.writeFile(filePath, JSON.stringify(todosTowrite,null,2),err=>
+    const data = { todos };
+    await fs.writeFile(filePath, JSON.stringify(data,null,2),err=>
     {
       if(err)throw err
       console.log('Done writing')

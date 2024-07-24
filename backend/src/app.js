@@ -2,8 +2,12 @@ const express = require("express");
 const app = express();
 const todosServices = require("./services/todosService.js");
 const cors = require("cors");
-
+const corsOptions = {
+  origin: 'http://localhost:3000', // Replace with your frontend URL
+  optionsSuccessStatus: 200
+};
 app.use(express.json());
+app.use(cors(corsOptions));
 app.get("/api/todos", async (req, res) => {
   await todosServices.readtodos((error, data) => {
     if (error) {
@@ -54,10 +58,8 @@ app.post("/api/todos", async (req, res) => {
   const newTodos = req.body;
   await todosServices.readtodos((error, data) => {
     try {
-      console.log("newtodos: ", newTodos);
-      console.log("todos: ", data);
+      
       data.push(newTodos);
-      console.log("data ", data)
       // await todosServices.writeFile(todos);
       todosServices.writeFile(data);
       res.status(201).json(newTodos);
@@ -67,6 +69,6 @@ app.post("/api/todos", async (req, res) => {
     }
   });
 });
-app.use(cors());
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listing on port ${port}`));
