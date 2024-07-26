@@ -7,11 +7,15 @@ import { useState } from "react";
 // import { addTodos,fetchTodos } from "../api/apiTodos";
 
 function App() {
+
   const [todoLists, setTodoLists] = useState([]);
   const [formActive, setFormActive] = useState(false);
   const [listActive, setListActive] = useState(false);
+  const [update, setUpdate]=useState(false);
+  const [formState, setFormState] = useState({});
 
-  function openForm() {
+
+   const openForm=()=>{
     if (!formActive) {
       setFormActive(true);
       setListActive(false);
@@ -20,29 +24,34 @@ function App() {
       setListActive(true);
     }
   }
-function onLinkClicked(active,item)
+ const onLinkClicked=(active,update,item)=>
 {
   
- setFormActive(!active);
- setListActive(active);
+ setFormActive(active);
+ setListActive(!active);
+ setUpdate(update);
+ setFormState(item);
+ console.log("item on linkclicked",item);
 }
-  function onSubmit(active) {
-    // setTodoLists([...todoLists, data]);
-    try {
+  const onSubmit=(active,updateState)=> {
+    
       setListActive(active);
       setFormActive(!active);
-    } catch (error) {
-      console.log("error", error.message);
-    }
+      if(!updateState)
+      {
+        setUpdate(false);
+        setFormState({});
+      }
+   
   }
   return (
     <div className="App">
-      <button className="addButton" onClick={openForm}>
+      <button className="addButton" onClick={()=>openForm()}>
         {" "}
-        add new todo
+       {formActive ? "todo Lists" : "add new todo"}
       </button>
-      {formActive && <TodosForm onSubmit={onSubmit}></TodosForm>}
-      {listActive && <TodoList onLinkClicked={onLinkClicked}></TodoList>}
+      {formActive && <TodosForm onSubmit={onSubmit} updateState={update} item={formState} ></TodosForm>}
+      {listActive && <TodoList onLinkClicked={onLinkClicked} ></TodoList>}
     </div>
   );
 }

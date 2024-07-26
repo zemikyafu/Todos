@@ -43,11 +43,23 @@ select {
   padding: 5px 15px;
   text-align: center;
   margin-right: 1px;
-}
-.App .addButton {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+.updateButton{
+  color: white;
+  background-color: rgba(16, 235, 107, 0.553);
+  /* border-style: none; */
+  border-width: 0px;
+  padding: 5px 15px;
+  text-align: center;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+/* .App .addButton {
+ 
+} */
 
 .todoList {
   width: 500px;

@@ -17,6 +17,7 @@ const readtodos = async (callback) => {
   });
 };
 
+///
 const updateTodos = async (id,newTodo,callback) => {
   fs.readFile(filePath, (error, data) => {
     if (error) {
@@ -24,11 +25,19 @@ const updateTodos = async (id,newTodo,callback) => {
       callback(error,null)
     } else {
       const json = JSON.parse(data);
+      json.todos.forEach(element => {
+        if(element.id===id)
+        {
+          element.title = newTodo.title;
+          element.deadline = newTodo.deadline;
+          element.status = newTodo.status;
+        }
+      });
+      writeData(json.todos);
       const todo = json.todos.find((item) => item.id === id);
       if (todo) {
-        todo.title = newTodo.title;
-        todo.deadline = newTodo.deadline;
-        todo.status = newTodo.status;
+       
+       // console.log("updated todos", todo);
         callback(null,todo)
       } else {
         callback(null,null)
@@ -49,7 +58,6 @@ const readtodo =   async (id,callback) => {
       const json = JSON.parse(data);
       const todo = json.todos.find((item) => item.id === id);
       if (todo) {
-        console.log("data1", JSON.stringify(todo));
         callback(null,todo)
       } else {
         callback(null,null)

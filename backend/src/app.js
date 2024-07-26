@@ -34,9 +34,13 @@ app.get("/api/todos/:id", async (req, res) => {
   });
 });
 
-app.put("/api/todo/:id", (req, res) => {
+app.put("/api/todos/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const newTodo = req.body;
+if(!newTodo)
+{
+  res.status(400).json({ error: "Request body empty" });
+}
   todosServices.updateTodos(id, newTodo, (error, data) => {
     if (error) {
       res.status(500).send({ error: "Internal server error" });
@@ -56,6 +60,7 @@ app.post("/api/todos", async (req, res) => {
   }
 
   const newTodos = req.body;
+
   await todosServices.readtodos((error, data) => {
     try {
       

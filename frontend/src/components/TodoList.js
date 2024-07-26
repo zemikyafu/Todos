@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchTodos } from "../api/apiTodos";
 
-
 function TodoList(prob) {
-
-  const[todoLists,setTododlists]=useState([]);
-  const[active,setActive]=useState(true);
+  const [todoLists, setTododlists] = useState([]);
+  const [active, setActive] = useState(false);
+  const [update,setUpdate]= useState(false);
 
   const getbordercolor = (deadlineStatus) => {
-  
     switch (deadlineStatus) {
       case "done":
         return "rgba(133, 240, 133, 0.5)"; //'lightgreen';
@@ -21,28 +19,30 @@ function TodoList(prob) {
     }
   };
 
+  useEffect(() => {
+    const getTodos = async () => {
+      try {
+        const todos = await fetchTodos();
+        setTododlists(todos);
+      } catch (error) {
+        console.log("Error fetching data: ", error.message);
+      }
+    };
+    getTodos();
+  }, []);
 
-  useEffect(()=>{
-   const getTodos=  async ()=>{
-    try {
-    
-      const todos = await fetchTodos();
-      console.log("useeffect start", todos)
-      setTododlists(todos)
-    } catch (error) {
-      console.log("Error fetching data: ",error.message)
-    }
-   };
-   getTodos();
-  },[])
- 
-  const updateTodo=(item)=>{
-    setActive(false);
-    prob.onLinkClicked(active,item);
-  }
+  const updateTodo = (item) => {
+    setActive(active);
+    setUpdate(update);
+    prob.onLinkClicked(true,true, item);
+  };
 
-  const todolist = todoLists.map((item,index) => (
-    <li key={index} onClick={()=>updateTodo(item)} style={{ borderColor: `${getbordercolor(item.status)}` }}>
+  const todolist = todoLists.map((item, index) => (
+    <li
+      key={index}
+      onClick={() => updateTodo(item)}
+      style={{ borderColor: `${getbordercolor(item.status)}` }}
+    >
       {" "}
       <span className="title">{item.title}</span>{" "}
       <span className="deadLine">Deadline: {item.deadline}</span>
@@ -55,7 +55,7 @@ function TodoList(prob) {
 
       <ul className="lists">{todolist}</ul>
       <ul className="statusbar">
-       <li style={{ borderColor: `${getbordercolor("done")}` }}> Done</li>
+        <li style={{ borderColor: `${getbordercolor("done")}` }}> Done</li>
         <li style={{ borderColor: `${getbordercolor("notstarted")}` }}>
           {" "}
           Not Started
