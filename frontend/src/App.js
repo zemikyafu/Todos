@@ -35,9 +35,10 @@ function App() {
 }
   const onSubmit=(active,updateState)=> {
     
+
       setListActive(active);
       setFormActive(!active);
-      if(!updateState)
+      if(updateState)
       {
         setUpdate(false);
         setFormState({});
@@ -46,6 +47,7 @@ function App() {
   }
   return (
     <div className="App">
+      <div className="App-header"></div>
       <button className="addButton" onClick={()=>openForm()}>
         {" "}
        {formActive ? "todo Lists" : "add new todo"}
