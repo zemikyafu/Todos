@@ -1,6 +1,6 @@
 # Frontend react and backend nodejs Todos application
 
-react front containing to do from and and list. Backend node js using express framework to expose todos api
+React frontend contains the todo form and list. Backend node js using express framework to expose todos api.Json file for storing todo data
 
 In the project directory, you can run:
 
